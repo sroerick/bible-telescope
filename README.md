@@ -26,7 +26,7 @@ A Neovim Telescope extension for exploring the Bible with Strong’s Concordance
     require("telescope").load_extension("ts-bible")
   end,
 }
-
+```
 ## Usage
 Commands
 
