@@ -4,8 +4,8 @@ local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
-local bible_dir = debug.getinfo(1, "S").source:sub(2):match("(.*[/\\])") .. "./bible"
-
+local bible_dir = debug.getinfo(1, "S").source:sub(2):match("(.*[/\\])") .. "../../bible"
+local M = {}
 
 local function open_chapter_buffer(path)
   vim.cmd("vsplit " .. vim.fn.fnameescape(path))
@@ -129,7 +129,7 @@ end
 
 
 -- 🔎 Lookup and insert specific verse(s)
-local function lookup_verses()
+M.lookup_verses = function()
   vim.ui.input({ prompt = "Verse (e.g. John 3:16-18): " }, function(input)
     if not input then return end
 
@@ -228,7 +228,8 @@ end
 
 
 -- 🔽 Picker: Verses
-local function pick_verses(chapter_path, book_label, chapter_label) local verses = parse_verses(chapter_path)
+local function pick_verses(chapter_path, book_label, chapter_label) 
+  local verses = parse_verses(chapter_path)
   pickers.new({}, {
     prompt_title = book_label .. " " .. chapter_label,
     finder = finders.new_table {
@@ -306,7 +307,7 @@ local function pick_chapters(book_path)
 end
 
 -- 🔽 Picker: Books
-local function pick_books()
+M.pick_books = function()
   local books = get_books()
 
   pickers.new({}, {
@@ -335,13 +336,4 @@ end
 
 vim.keymap.set("n", "K", show_strongs_popup, { desc = "Show Strong's entry" })
 
--- 📦 Register as Telescope extension
-return require("telescope").register_extension({
-  exports = {
-    bible = pick_books,
-    lookup = lookup_verses,
-  }
-})
-
-
-
+return M

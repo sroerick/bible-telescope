@@ -20,7 +20,7 @@ A Neovim Telescope extension for exploring the Bible with Strong’s Concordance
 
 ```lua
 {
-  "yourusername/nvim-bible",
+  "sroerick/nvim-bible",
   dependencies = { "nvim-telescope/telescope.nvim" },
   config = function()
     require("telescope").load_extension("bible")
